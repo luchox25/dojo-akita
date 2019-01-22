@@ -145,16 +145,16 @@
         and
         ```ts
         export class AppComponent {
-            public blocks: Block[] = require('./shared/data-dummy.json');
+            public tasksline: Tasksline[] = require('./shared/data-dummy.json');
 
-            get blockIds(): string[] {
-                return this.blocks.map(block => block.id);
+            get taskslineIds(): string[] {
+                return this.tasksline.map(item => item.id);
             }
 
             onTaskDrop(event: CdkDragDrop<Task[]>) {
                 // In case the destination container is different from the previous container, we
                 // need to transfer the given task to the target data array. This happens if
-                // a task has been dropped on a different block.
+                // a task has been dropped on a different tasksline.
                 if (event.previousContainer === event.container) {
                 moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
                 } else {
@@ -165,7 +165,7 @@
                 }
             }
 
-            onBlockDrop(event: CdkDragDrop<Block[]>) {
+            onTaskslineDrop(event: CdkDragDrop<Tasksline[]>) {
                 moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
             }
         }
@@ -173,11 +173,11 @@
     * edit app.component.html 
         ```html
         <div class="board">
-            <div class="board__card-list" [style.background-color]="block.color" *ngFor="let block of blocks; let i=index">
-                <h2 cdkDragHandle class="title is-size-4">{{block.title}}</h2>
-                <div class="board__card-list__content" cdkDropList [id]="block.id" [cdkDropListData]="block.tasks" [cdkDropListConnectedTo]="blockIds"
+            <div class="board__card-list" [style.background-color]="line.color" *ngFor="let line of tasksline; let i=index">
+                <h2 cdkDragHandle class="title is-size-4">{{line.title}}</h2>
+                <div class="board__card-list__content" cdkDropList [id]="line.id" [cdkDropListData]="line.tasks" [cdkDropListConnectedTo]="taskslineIds"
                 (cdkDropListDropped)="onTaskDrop($event)">
-                <div class="card card-list-item" *ngFor="let task of block.tasks" cdkDrag>
+                <div class="card card-list-item" *ngFor="let task of line.tasks" cdkDrag>
                     <header class="card-header">
                         <p class="card-header-title">
                         {{ task.title }}
